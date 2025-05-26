@@ -1,0 +1,82 @@
+import { useEffect, useState, useRef, useCallback } from "react";
+import useIntersectionObserver from "./useIntersectionObserver ";
+ 
+export const useNavBar = (sectionsRefMap) => {
+  const initialCategory = sectionsRefMap[0]?.name || null;
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [navWidth, setNavWidth] = useState(0);
+  const [manualScroll, setManualScroll] = useState(false);
+
+  const navRef = useRef(null);
+  const indicatorRef = useRef(null);
+  const navButtonsRefs = useRef({}); // Mantendremos un objeto para acceder fácilmente por nombre
+
+  // Crear el mapa de observadores basado en el array de refs de las secciones
+  const visibilityMap = {};
+
+  sectionsRefMap.forEach(({ name, ref }) => {
+    visibilityMap[name] = useIntersectionObserver(ref, { threshold: 0.5 });
+  });
+  // Detectar cuál es la categoría visible actualmente
+  useEffect(() => {
+    if (manualScroll || !visibilityMap) return;
+
+    for (const { name } of sectionsRefMap) {
+      if (visibilityMap[name]) {
+        if (activeCategory !== name) {
+          setActiveCategory(name);
+        }
+        break; // Detener la iteración al encontrar la primera sección visible
+      }
+    }
+  }, [activeCategory, manualScroll, sectionsRefMap, visibilityMap]);
+
+  const updateIndicator = useCallback((categoryId) => {
+    requestAnimationFrame(() => {
+      if (navRef.current && indicatorRef.current) {
+        const activeButton = navButtonsRefs.current[categoryId];
+        if (activeButton) {
+          const navRect = navRef.current.getBoundingClientRect();
+          const buttonRect = activeButton.getBoundingClientRect();
+          const left = buttonRect.left - navRect.left + navRef.current.scrollLeft;
+          const width = buttonRect.width;
+          indicatorRef.current.style.left = `${left}px`;
+          indicatorRef.current.style.width = `${width}px`;
+        }
+      }
+    });
+  }, []);
+
+  // Al hacer click en nav category:
+  const scrollToCategory = useCallback(
+    (categoryName) => {
+      const sectionInfo = sectionsRefMap.find((item) => item.name === categoryName);
+      if (sectionInfo?.ref?.current) {
+        setManualScroll(true);
+        sectionInfo.ref.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        setActiveCategory(categoryName);
+        setTimeout(() => setManualScroll(false), 800);
+      }
+    },
+    [sectionsRefMap]
+  );
+
+  // Actualizar el indicador y el ancho del navegador
+  useEffect(() => {
+    const update = () => {
+      updateIndicator(activeCategory);
+      if (navRef.current) {
+        setNavWidth(navRef.current.offsetWidth);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [activeCategory, updateIndicator]);
+  return { activeCategory, navRef, indicatorRef, navButtonsRefs, scrollToCategory, navWidth };
+};
+
+export default useNavBar;
