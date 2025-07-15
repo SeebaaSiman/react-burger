@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import BurgerCard from "./BurgerCard";
 import { ButtonArrow } from "../../buttons/ButtonArrow";
+import BurgerCard from "./BurgerCard";
 import { LoaderMenu } from "../../loader/LoaderMenu";
 import {
   FeaturedBurgersButton,
@@ -8,11 +8,12 @@ import {
   FeaturedBurgersGrid,
   FeaturedHeader,
 } from "../../../ui/styles/home-style";
+import { useMenuContext } from "../../../store/context/MenuProvider";
 
-export const FeaturedBurgers = ({ menuRef, products, error ,cartButtonTypes}) => {
+export const FeaturedBurgers = ({ menuRef }) => {
+  const { products, error } = useMenuContext();
   const navigate = useNavigate();
-  // IDs de las burgers destacadas
-  const featuredIds = ["simple-1", "simple-2", "simple-3"];
+   const featuredIds = ["simple-1", "simple-2", "simple-3"];
   const burgersSimples = products?.find((cat) => cat.id === "burgers-simples");
   const featuredBurgers = burgersSimples ? burgersSimples.items.filter((item) => featuredIds.includes(item.id)) : [];
 
@@ -30,7 +31,7 @@ export const FeaturedBurgers = ({ menuRef, products, error ,cartButtonTypes}) =>
       {!error && products && (
         <FeaturedBurgersGrid>
           {featuredBurgers.map((burger, index) => (
-            <BurgerCard key={burger.id} burger={burger} index={index} cartButtonTypes={cartButtonTypes}/>
+            <BurgerCard key={burger.id} burger={burger} index={index} />
           ))}
         </FeaturedBurgersGrid>
       )}

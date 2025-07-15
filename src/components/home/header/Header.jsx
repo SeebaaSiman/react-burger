@@ -1,28 +1,13 @@
-import { useState } from "react";
-import { HeaderContainer, HeaderToggleContainer } from "../../../ui/styles/home-style";
 import { HeaderLogo } from "./HeaderLogo";
 import { HeaderNav } from "./HeaderNav";
-import { HeaderIcon } from "./HeaderIcon";
-import { CartNav } from "../../cart/CartNav";
+import { HamburgerIcon } from "../../HamburgerIcon";
+import ThemeToggleButton from "../../buttons/ThemeToggleButton";
+import { HeaderContainer, HeaderToggleSesionContainer } from "../../../ui/styles/home-style";
+import { HeaderLogin } from "./HeaderLogin";
+import { useMenu } from "../../../hooks/useMenu";
 
-function Header({
-  navRef,
-  navButtonsMap,
-  navButtonsRefs,
-  scrollToCategory,
-  activeCategory,
-  cart,
-  cartButtonTypes,
-  handleClearCart,
-}) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+function Header({ navRef, navButtonsMap, navButtonsRefs, scrollToCategory, activeCategory }) {
+  const { toggleMenu, closeMenu, menuOpen } = useMenu();
 
   return (
     <HeaderContainer>
@@ -30,10 +15,12 @@ function Header({
       <HeaderNav
         {...{ scrollToCategory, menuOpen, navRef, navButtonsMap, activeCategory, navButtonsRefs, closeMenu }}
       />
-      <HeaderIcon {...{ toggleMenu, menuOpen }} />
-      <HeaderToggleContainer>
-        <CartNav cartState={cart} cartButtonTypes={cartButtonTypes} handleClearCart={handleClearCart} />
-      </HeaderToggleContainer>
+      <HeaderToggleSesionContainer>
+        <ThemeToggleButton />
+        <HeaderLogin />
+      </HeaderToggleSesionContainer>
+
+      <HamburgerIcon {...{ toggleMenu, menuOpen }} />
     </HeaderContainer>
   );
 }

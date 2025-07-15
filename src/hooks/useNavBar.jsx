@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import useIntersectionObserver from "./useIntersectionObserver ";
- 
+
 export const useNavBar = (sectionsRefMap) => {
   const initialCategory = sectionsRefMap[0]?.name || null;
   const [activeCategory, setActiveCategory] = useState(initialCategory);
@@ -9,27 +9,29 @@ export const useNavBar = (sectionsRefMap) => {
 
   const navRef = useRef(null);
   const indicatorRef = useRef(null);
-  const navButtonsRefs = useRef({}); // Mantendremos un objeto para acceder fácilmente por nombre
+  const navButtonsRefs = useRef({});
 
-  // Crear el mapa de observadores basado en el array de refs de las secciones
-  const visibilityMap = {};
+  const stableSections = useMemo(() => sectionsRefMap, []);
 
-  sectionsRefMap.forEach(({ name, ref }) => {
-    visibilityMap[name] = useIntersectionObserver(ref, { threshold: 0.5 });
-  });
-  // Detectar cuál es la categoría visible actualmente
+
+  const visibilities = stableSections.map(({ ref }) => useIntersectionObserver(ref, { threshold: 0.2 }));
+  
+  const visibilityMap = stableSections.reduce((acc, { name }, idx) => {
+    acc[name] = visibilities[idx];
+    return acc;
+  }, {});
   useEffect(() => {
     if (manualScroll || !visibilityMap) return;
 
-    for (const { name } of sectionsRefMap) {
+    for (const { name } of stableSections) {
       if (visibilityMap[name]) {
         if (activeCategory !== name) {
           setActiveCategory(name);
         }
-        break; // Detener la iteración al encontrar la primera sección visible
+        break;
       }
     }
-  }, [activeCategory, manualScroll, sectionsRefMap, visibilityMap]);
+  }, [activeCategory, manualScroll, stableSections, visibilityMap]);
 
   const updateIndicator = useCallback((categoryId) => {
     requestAnimationFrame(() => {
@@ -47,7 +49,6 @@ export const useNavBar = (sectionsRefMap) => {
     });
   }, []);
 
-  // Al hacer click en nav category:
   const scrollToCategory = useCallback(
     (categoryName) => {
       const sectionInfo = sectionsRefMap.find((item) => item.name === categoryName);
@@ -64,7 +65,6 @@ export const useNavBar = (sectionsRefMap) => {
     [sectionsRefMap]
   );
 
-  // Actualizar el indicador y el ancho del navegador
   useEffect(() => {
     const update = () => {
       updateIndicator(activeCategory);

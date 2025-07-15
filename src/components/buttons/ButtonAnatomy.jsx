@@ -5,7 +5,7 @@ export const ButtonAnatomy = ({ text, icon }) => {
     <ButtonAnatomyStyle>
       <div className='icon'>
         <span className='text-icon hide'>Icon</span>
-        <img src={icon} alt='' height='30' width='30' />
+        <img src={icon} alt='' height='35' width='35' />
       </div>
       <span className='title'> {text} </span>
       <div className='padding-left hide'>

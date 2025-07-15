@@ -54,11 +54,11 @@ const showWords = keyframes` 10% {
     transform: translateY(-400%);
   }`;
 const LoaderContainer = styled.div`
+  font-family: "Zodiak";
   padding: 1rem 2rem;
   border-radius: 1.25rem;
-
+  overflow: hidden;
   color: rgb(124, 124, 124);
-  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 25px;
   -webkit-box-sizing: content-box;
@@ -68,6 +68,11 @@ const LoaderContainer = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  p {
+    font-family: "Zodiak";
+    font-weight: 400;
+    font-size: 22px;
+  }
 `;
 const LoaderWordsContainer = styled.div`
   overflow: hidden;
@@ -76,14 +81,16 @@ const LoaderWordsContainer = styled.div`
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(var(--bg-color) 10%, transparent 30%, transparent 70%, var(--bg-color) 90%);
     z-index: 20;
   }
 `;
 const LoaderWord = styled.span`
+  font-family: "Zodiak";
+  font-weight: 400;
+  font-size: 24px;
   display: block;
   height: 100%;
   padding-left: 6px;
-  color: #956afa;
+  color: #b1f7c3;
   animation: ${showWords} 4s infinite;
 `;

@@ -13,7 +13,7 @@ export const PromotionalBanner = () => {
   return (
     <PromotionalBannerWrapper>
       <BannerOverlay>
-        <video autoPlay loop muted lazyload>
+        <video autoPlay loop muted lazyload='true'>
           <source src={promo} type='video/mp4' />
         </video>
 

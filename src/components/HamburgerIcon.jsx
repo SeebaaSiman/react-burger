@@ -1,6 +1,6 @@
-import { IconStyle } from "../../../ui/styles/home-style";
+import { IconStyle } from "../ui/styles/home-style";
 
-export const HeaderIcon = ({ toggleMenu, menuOpen }) => {
+export const HamburgerIcon = ({ toggleMenu, menuOpen }) => {
   return (
     <IconStyle className={menuOpen ? "open" : ""} onClick={toggleMenu}>
       <span></span>

@@ -195,7 +195,7 @@ export const menuCategories = [
    },
    {
     id: "doble-3",
-    name: "⭐ SWEET DREAMS, los sueños dulces están hechos de esto.",
+    name: "⭐ SWEET DREAMS",
     description: "Hamburguesa de doble medallón de carne, 280g, con cheddar x4, candy bacon y cebolla caramelizada a la bbq. Va con papas fritas y salsa a elección.",
     price: 13999,
     image: sweetDreams,
@@ -300,7 +300,7 @@ export const menuCategories = [
    },
    {
     id: "doble-18",
-    name: "LA RATONERA, una explosión de queso en cada mordisco",
+    name: "LOBO, sabor de manada",
     description: "Hamburguesa de doble medallón de carne con triple queso; cheddar, tybo y deditos de mozarela, panceta, cebolla morada y mayonesa especial. Acompañada de papas fritas y salsa a elección.",
     price: 14600,
     image: ratonera,
@@ -314,7 +314,7 @@ export const menuCategories = [
    },
    {
     id: "doble-20",
-    name: "LA CHILINDRINA, ándale ándale",
+    name: "CHILINDRINA, ándale ándale",
     description: "Hamburguesa de doble medallón de carne con triple queso; cheddar, tybo y deditos de mozarela, panceta, cebolla morada y mayonesa especial. Acompañada de papas fritas y salsa a elección.",
     price: 14600,
     image: chilindrina,

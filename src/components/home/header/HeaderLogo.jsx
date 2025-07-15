@@ -1,12 +1,16 @@
-import { HeaderLogoContainer } from "../../../ui/styles/home-style";
+import { HeaderLogoCartContainer, HeaderLogoContainer } from "../../../ui/styles/home-style";
+import { CartNav } from "../../cart/CartNav";
 
 export const HeaderLogo = () => {
   return (
     <HeaderLogoContainer>
-      <span>R</span>
+      <p>R</p>
       eact
-      <span>B</span>
+      <p>B</p>
       urger
+      <HeaderLogoCartContainer>
+        <CartNav />
+      </HeaderLogoCartContainer>
     </HeaderLogoContainer>
   );
 };

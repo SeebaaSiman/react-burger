@@ -3,7 +3,9 @@ import cartIcon from "../../assets/icons/cart.svg";
 import cartLot from "../../assets/icons/cart-lot.svg";
 import { AsideCartContent, AsideCartHeader, AsideCartStyle, HeaderCartStyle } from "../../ui/styles/cart-style";
 import { CartItems } from "./CartItems";
-export const CartNav = ({ cartState, cartButtonTypes, handleClearCart }) => {
+import { useCart } from "../../store/context/CartContext";
+export const CartNav = ({ closeMenu }) => {
+  const { cartState } = useCart();
   const [asideOpen, setAsideOpen] = useState(false);
   useEffect(() => {
     if (asideOpen) {
@@ -15,25 +17,28 @@ export const CartNav = ({ cartState, cartButtonTypes, handleClearCart }) => {
       document.body.style.overflow = "";
     };
   }, [asideOpen]);
+  const onClickAside = () => {
+    if (closeMenu) {
+      closeMenu();
+    }
+    setAsideOpen(!asideOpen);
+  };
+
   return (
-    <>
-      <HeaderCartStyle onClick={() => setAsideOpen(!asideOpen)}>
-        <img src={cartState?.length > 0 ? cartLot : cartIcon} alt='icon cart empty' width={26} height={26} />
-        {cartState?.length > 0 && <span>{cartState?.length}</span>}
+    <div>
+      <HeaderCartStyle onClick={onClickAside}>
+        <img src={cartState?.items.length > 0 ? cartLot : cartIcon} alt='icon cart empty' width={26} height={26} />
+        {cartState?.items.length > 0 && <p>{cartState?.items.length}</p>}
       </HeaderCartStyle>
       <AsideCartStyle className={asideOpen ? "open" : ""}>
         <AsideCartHeader>
           <h2>Mi carrito</h2>
-          <button onClick={() => setAsideOpen(!asideOpen)}>X</button>
+          <button onClick={onClickAside}>X</button>
         </AsideCartHeader>
         <AsideCartContent>
-          {!cartState?.length > 0 ? (
-            <p>Tu carrito está vacío</p>
-          ) : (
-            <CartItems products={cartState} cartButtonTypes={cartButtonTypes} handleClearCart={handleClearCart} />
-          )}
+          {!cartState?.items.length > 0 ? <p>Tu carrito está vacío</p> : <CartItems products={cartState.items} />}
         </AsideCartContent>
       </AsideCartStyle>
-    </>
+    </div>
   );
 };

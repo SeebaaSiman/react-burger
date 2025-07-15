@@ -1,19 +1,21 @@
+import { useMenuContext } from "../../store/context/MenuProvider";
 import { FeaturedSection, MenuItems } from "../../ui/styles/menu-style";
 import { LoaderMenu } from "../loader/LoaderMenu";
 import { CardProduct } from "./CardProduct";
 
-export const Featured = ({ products, error, cartButtonTypes }) => {
+export const Featured = () => {
+  const { products, error } = useMenuContext();
+
   if (error) return <p>Error al cargar los productos destacados</p>;
   if (!products) return <LoaderMenu />;
 
-  // Recorre todas las categorías y junta los items con "⭐" en el nombre
-  const featuredProducts = products?.flatMap((category) => category.items).filter((item) => item.name.includes("⭐"));
+   const featuredProducts = products?.flatMap((category) => category.items).filter((item) => item.name.includes("⭐"));
   return (
     <FeaturedSection>
       <h2>Nuestros destacados</h2>
       <MenuItems>
         {featuredProducts.map((item) => (
-          <CardProduct item={item} cartButtonTypes={cartButtonTypes} />
+          <CardProduct key={item.id} item={item} />
         ))}
       </MenuItems>
     </FeaturedSection>

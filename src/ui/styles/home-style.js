@@ -11,55 +11,62 @@ position: sticky;
   top: 0;
   z-index: 40;
   width: 100%;
-  background-color: #F5F5F5;
-     border-bottom: 1px solid #A4C639;
+  background-color: ${(props) => props.theme.bgApp};
+     border-bottom: 1px solid ${props => props.theme.primaryText};
    margin: 0 auto;
   padding: 0 1rem;
-     display: grid;
-  grid-template-areas:
-    "logo toggle icon nav ";
-      grid-template-columns: auto 1fr auto auto;
-    grid-template-rows: auto;
-align-items: center;
+display:flex;
+justify-content: space-between;
+align-items:center;
    height: 4rem;
 
-  @media ${device.tablet} {
-    grid-template-areas: "logo nav  toggle";
-
-  }
 `
 export const HeaderLogoContainer = styled.div`
-  grid-area: logo;
-  font-size: 1.5rem;
+font-family: "Zodiak";
+   font-size: 1.5rem;
   font-weight: 700;
-  color: #FF6200;
-  span{
+  color:${props => props.theme.details};
+      /* font-size: 9rem; */
+      line-height: 1em;
+  p{
+font-family: "Zodiak";
+  font-weight: 700;
     font-size: 1.75rem;
+    /* text-shadow: 0px 1px  1px ${(props) => props.theme.secondaryText}; */
   }
-`
-export const HeaderToggleContainer = styled.div`
-grid-area: toggle;
-display: flex;
-align-items:center;
-justify-content: center;
-gap:1.5rem;
-`
-
-
+  display:flex;
+  align-items: end;
+   @media ${device.tablet} {
+     font-size: 1.75rem;
+     p{
+    font-size: 2rem;
+  }
+      }`
+export const HeaderLogoCartContainer = styled.div`
+margin-left:6px;
+p{
+  color:${(props) => props.theme.primaryText};
+    font-size: 0.85rem;
+}
+ `
+export const HeaderToggleSesionContainer = styled.div`
+ display:flex;
+ align-items: center;
+ justify-content: center;
+ gap:1rem;
+ `
 export const IconStyle = styled.div`
- grid-area: icon;
-  width: 35px;
+   width: 35px;
   height: 30px;
   margin: 10px 10px;
   position: relative;
   cursor: pointer;
   display: inline-block;
   span {
-    background-color: #1A1A1A;
+    background-color: ${props => props.theme.primaryText};
     position: absolute;
     border-radius: 2px;
-    transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
-    width: 100%;
+transition:${(props) => props.theme.transition};    width: 100%;
     height: 4px;
   }
 
@@ -77,7 +84,7 @@ export const IconStyle = styled.div`
   }
   &:not(.open):hover span:nth-child(1) {
     transform: scaleX(0.8);
-        background-color: #4A4A4A;
+        background-color: ${props => props.theme.secondaryText};
   }
   &:not(.open):hover span:nth-child(2) {
     transform: scaleX(0.5);
@@ -85,7 +92,7 @@ export const IconStyle = styled.div`
   }
   &:not(.open):hover span:nth-child(3) {
     transform: scaleX(0.8);
-        background-color: #4A4A4A;
+        background-color: ${props => props.theme.secondaryText};
   }
   &.open span:nth-child(1) {
     top: 13px;
@@ -102,13 +109,12 @@ export const IconStyle = styled.div`
 
 `;
 export const HeaderNavContainer = styled.nav`
-  grid-area: nav;
-display: none;
+ display: none;
   position: fixed;
   top: 4rem;
   left: 0;
   width: 100%;
-  background-color: #F5F5F5;
+  background-color: ${(props) => props.theme.bgApp};
   padding: 0rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 12px;
@@ -116,12 +122,11 @@ display: none;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-    transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
-
+transition:${(props) => props.theme.transition};
   &.open {
   display: block;
-  padding: 1rem;    transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
-
+  padding: 1rem;
+transition:${(props) => props.theme.transition};
   button{
     display: block;
         transition: 0.1s cubic-bezier(0.8, 0.5, 0.2, 1.4);
@@ -133,20 +138,20 @@ display: none;
 button {
   display: none;
   padding: 0.5rem 0;
-  color: #4A4A4A;
+  color: ${props => props.theme.details};
   text-decoration: none;
   font-weight: 500;
-  transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
-
+transition:${(props) => props.theme.transition};
   &.active{
-    color:#4A90E2;
-   transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
+    color:${props => props.theme.secondaryText};
+transition:${(props) => props.theme.transition};  text-decoration: underline;
+  text-decoration-color:${props => props.theme.secondaryText};
 
   }
-  &:hover {    transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
+  &:hover {
+transition:${(props) => props.theme.transition};  text-decoration: underline;
+  text-decoration-color:${props => props.theme.primaryText};
 
-  text-decoration: underline;
-  text-decoration-color:#A4C639;
 }
 }
     @media ${device.tablet} {
@@ -179,7 +184,7 @@ export const HeroSectionContainer = styled.section`
   height: 70vh;
   display: flex;
   align-items: center;
-  color: #F5F5F5;
+  color: ${(props) => props.theme.bgApp};
   text-align: center;
   background-image: url("/images/hero-bg.jpg");
   background-size: cover;
@@ -206,14 +211,17 @@ width: 100%;
 
   h1{  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color:#F5F5F5;
+  color:${(props) => props.theme.primaryText};
   }
   span {
-     color: #FF6200;
+font-family: "Erode";
+font-weight:700;
+     color:${props => props.theme.secondaryText};
   }
-  p {font-size: 1.125rem;
+  p {
+    font-size: 1.125rem;
   max-width: 700px;
-  color:#A4C639;
+  color:${props => props.theme.secondaryText};
   margin: 0 auto 1.5rem;}
 div { display: flex;
   flex-direction: column;
@@ -245,75 +253,16 @@ export const FeaturedBurgersContainer = styled.section`
   max-width: 1200px;
   margin: 0 auto;
  `
-export const BurgerCardContainer = styled.div`
-position: relative;
-   border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  background-color: #F5F5F5;
-  `
-export const BurgerImage = styled.div`
-width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
- img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
 
- img:hover {
-  transform: scale(1.05);
-}
- `
-export const BurgerCardContent = styled.div`
-  padding: 1rem;
-  p {
-     font-size: 0.875rem;
-   color: #4A4A4A;
-  margin-bottom: 1rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  }
-  `
-export const BurgerHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  div{
-     display: flex;
-  align-items: center;
-  }
-h3{
-  color:#1A1A1A;
-}
-  svg{
-     width: 1rem;
-  height: 1rem;
-  margin-right: 0.25rem;
-  color: #FF6200;
-  }
- `
-export const BurgerFooter = styled.div`
-width: 100%;
- display: flex;
-  justify-content: space-between;
-  align-items: center;
- span {
-  font-size: 1.125rem;
-  font-weight: 700;
-    color:#A4C639;
-}
- `
 export const FeaturedHeader = styled.div`
  text-align: center;
   margin-bottom: 2.5rem;
+  h2{
+  color: ${props => props.theme.primaryText};
+
+  }
  p {
-  color: #4A4A4A;
+  color: ${props => props.theme.secondaryText};
   max-width: 700px;
   margin: 0 auto;
 }
@@ -350,7 +299,7 @@ align-items: center;
 //* About section */
 export const AboutSectionContainer = styled.section`
 padding: 4rem 1rem;
-  background-color: #4A4A4A;
+  background-color: ${props => props.theme.secondaryText};
 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 
@@ -368,10 +317,13 @@ padding: 4rem 1rem;
 export const AboutContent = styled.div`
 h2 {
   margin-bottom: 1rem;
-  color:#A4C639;
+  color:#F5F5F5;
+    text-shadow: 2px 2px 0 ${(props) => props.theme.primaryText};
+       font-size: 3rem;
+    line-height: 1em;
 }
  p {
-  color: #F5F5F5;
+ color: 2px solid ${(props) => props.theme.primaryText};
   margin-bottom: 1rem;
 }
 
@@ -386,10 +338,10 @@ svg {
   height: 24px;
   margin-right: 0.5rem;
   margin-left: 0;
-  color: #FF6200;
+  color:${props => props.theme.primaryButtons};
 }
 span{
-  color:#FF6200;
+    color:${props => props.theme.primaryButtons};
 }
 `
 export const AboutImage = styled.div`
@@ -412,7 +364,14 @@ export const LocationSectionContainer = styled.section`
 width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  color:#1A1A1A;
+  color:${props => props.theme.primaryText};
+      h2{
+  color:${props => props.theme.primaryText};
+    text-shadow: 2px 2px 0 ${(props) => props.theme.secondaryButtons};
+      line-height: 1em;
+      font-size: 3rem;
+
+      }
   div {
 
 &:first-child {
@@ -420,7 +379,7 @@ width: 100%;
   margin-bottom: 2.5rem;
 
   p {
-  color: #4A4A4A;
+  color:${props => props.theme.primaryText};
   max-width: 700px;
   margin: 0 auto;
 }
@@ -435,7 +394,7 @@ width: 100%;
   }
 div:first-child{
      height: 300px;
-  background-color: #F5F5F5;
+  background-color: transparent;
   border-radius: 0.5rem;
   overflow: hidden;
 }
@@ -451,7 +410,7 @@ div:last-child {
 }
 
  p {
-  color: #4A4A4A;
+  color: ${props => props.theme.primaryText};
   margin-bottom: 1rem;
 }
 button{
@@ -462,7 +421,7 @@ button{
  `
 //* Footer styles */
 export const FooterContainer = styled.footer`
-   background-color: #A4C639;
+   background-color: ${props => props.theme.primaryText};
 
   padding: 2rem 1rem;
    width: 100%;
@@ -478,22 +437,22 @@ export const FooterGrid = styled.div`
   h3 {
   font-size: 1.125rem;
   margin-bottom: 1rem;
-  color:#4A90E2;
+  color:${props => props.theme.secondaryText};
 }
   p,
   li {
   font-size: 0.875rem;
-  color: #1A1A1A;
+  color: ${props => props.theme.white};
   margin-bottom: 0.5rem;
 }
   ul {
   list-style: none;
 }
   a {
-  color: #1A1A1A;
+  color: ${props => props.theme.white};
   text-decoration: none;
   &:hover {
-  color: #4A4A4A;
+  color: ${props => props.theme.secondaryText};
   text-decoration: underline;
   cursor: pointer;
 }
@@ -510,10 +469,10 @@ export const FooterGrid = styled.div`
 export const FooterButton = styled.div`
  margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid #F5F5F5;
-  text-align: center;
+  border-top: 1px solid ${(props) => props.theme.secondaryText};
+   text-align: center;
   p {
   font-size: 0.875rem;
-  color: #4A4A4A;
+  color: ${props => props.theme.white};
  }
 `

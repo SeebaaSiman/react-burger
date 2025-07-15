@@ -1,6 +1,8 @@
 export const restaurantInfo = {
  name: "React Burger",
  address: "Av. Programación 404, Colonia Desarrollo, Ciudad Tecnológica, CP 12345",
+ phone: "221-03061887 ",
+ instagram: "@ReactBurger",
  hours: [
   { day: "Lunes", hours: "18:00 - 23:00" },
   { day: "Martes", hours: "18:00 - 23:00" },

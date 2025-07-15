@@ -4,25 +4,28 @@ import { device } from "./device"
 
 export const HeaderCartStyle = styled.div`
   position: relative;
+    z-index: 500;
 
 img {
- width: 26px;
-height: 26px;
+ width: 30px;
+height: 30px;
   transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
+
   cursor: pointer;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
   }
  }
-  span{
+  p{
   position: absolute;
+  color:${(props) => props.theme.primaryText};
   top: -80px;
   right: -80px;
- background-color:transparent;
-  color: #1A1A1A;
+ background-color:${(props) => props.theme.bgApp};;
+ font-weight: bolder;
   border-radius: 50%;
   padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   animation: ${showInIcon} 0.3s ease-in-out forwards;
 }
 `
@@ -30,20 +33,23 @@ export const AsideCartStyle = styled.aside`
 position: fixed;
 top:0;
 left:0;
-border-right:1px solid #A4C639;
+border-right:1px solid ${props => props.theme.details};
   transform:translateX(-2px);
-  background-color:#F5F5F5;
+  background-color:${(props) => props.theme.bgApp};
    width: 0%;
   height: 100dvh;
   transition: 0.4s cubic-bezier(0.8, 0.5, 0.2, 1.4);
   padding: 0;
+
+    z-index: 500;
+
 div,h2,p,button{
   opacity: 0;
   scale:0;
 }
 &.open{
     transform:translateX(0);
-  width: 50%;
+  width: 65%;
   @media ${device.laptop}{
   width: 40%;
 
@@ -59,12 +65,13 @@ export const AsideCartHeader = styled.div`
    display:flex;
   align-items: start;
   justify-content: space-between;
-  border-bottom: 1px #A4C639 dashed;
+  border-bottom: 1px ${props => props.theme.details} dashed;
   h2{
-  color:#A4C639;
+  color:${props => props.theme.primaryText};
 }
     button{
-     color:#4A90E2;
+      font-size: 1.2rem;
+     color:${props => props.theme.primaryText};
   }
     button:hover{
     scale:1.1;
@@ -94,9 +101,8 @@ export const CartItemsContainer = styled.section`
   overflow-y: auto;
 `;
 export const CartFooter = styled.section`
-/* margin-top: 10px; */
-  width: 100%;
-  border-top: 1px #a4c639 dashed;
+   width: 100%;
+  border-top: 1px  ${(props) => props.theme.primaryText} dashed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,8 +114,9 @@ export const CartFooter = styled.section`
     padding: 0 20px;
     margin: 10px 0;
   }
-  div span {
+  div span ,div p{
     font-weight: bold;
+    color:${(props) => props.theme.primaryText};
   }
  a, button {
     width: 80%;
@@ -124,13 +131,16 @@ export const CartFooter = styled.section`
     text-align: center;
   }
   .btn-proceder {
-     background-color: #151515;
-     color:#F5F5F5;
+     background-color:${(props) => props.theme.primaryText};
+     color:${(props) => props.theme.bgApp};
       border:1px solid transparent;
+        font-size: 1rem;
+      box-shadow: ${(props) => props.theme.cardShadow};
+
      &:hover {
-      background-color: #F5F5F5;
-      color: #4A90E2;
-      border: 1px solid #A4C639;
+      background-color: ${(props) => props.theme.bgApp};
+      color: ${props => props.theme.secondaryButtons};
+      border: 1px solid ${props => props.theme.details};
        transition:all  0.3s ease-in-out;
       }
   }
@@ -138,6 +148,7 @@ export const CartFooter = styled.section`
     color: #ff0000;
     background-color: transparent;
     border: 1px solid #000;
+      box-shadow: ${(props) => props.theme.cardShadow};
     &:hover {
       background-color: #ff0000;
       color: white;
@@ -152,46 +163,81 @@ export const CartItemWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: start;
   align-items: center;
-  gap: 12px;
-  .cart-item-name {
-    color: #ff6200;
+  gap: 6px;
+  padding-right: 10px;
+    margin-bottom: 8px;
+   hr {
+    width: 80%;
+    margin: 2px auto;
+  }
+`;
+export const CartItemName = styled.div`
+    color:${(props) => props.theme.primaryText};
     width: 100%;
     display: flex;
     align-items: center;
+    gap:10px;
+    span,p{
+          font-family: 'Erode';
+font-weight:400;
+      color:${(props) => props.theme.primaryText};
+    }
+ 
+    div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+  flex-wrap:wrap;
+    }
     span {
       margin: auto;
       font-weight: bold;
       font-size: 1.1rem;
     }
     img {
-      width: 80px;
+      width: 90px;
       height: auto;
       border-top-right-radius: 12px;
       border-bottom-right-radius: 12px;
+            box-shadow: ${(props) => props.theme.cardShadow};
       @media ${device.tablet} {
         width: 120px;
       }
     }
-  }
-  .cart-item-quantity {
-    margin: auto;
-    color: #4a90e2;
+`
+export const CartItemQuantity = styled.div`
+ margin: auto;
+    color: ${props => props.theme.secondaryButtons};
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    div {
+`
+export const CartItemPrice = styled.div`
+ color: ${props => props.theme.primaryText};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:6px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    p,span{
+ color: ${props => props.theme.primaryText};
+    }
+`;
+export const CartItemQuantityButton = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      border-radius: 10px;
-      border: 1px solid #4a90e2;
-      padding: 8px 6px;
-      button {
+      gap: 6px;
+
+       padding: 6px 4px;
+       button {
         background-color: transparent;
         border: none;
-        color: #4a90e2;
+        color: ${props => props.theme.secondaryButtons};
         font-weight: bold;
         font-size: 14px;
         cursor: pointer;
@@ -203,24 +249,8 @@ export const CartItemWrapper = styled.div`
         }
       }
       p {
-        color: #4a90e2;
+        color: ${props => props.theme.secondaryButtons};
         font-weight: bold;
         font-size: 18px;
       }
-    }
-  }
-  .cart-item-price {
-    color: #a4c639;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 20px;
-    margin: 10px 0;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  hr {
-    width: 80%;
-    margin: 0 auto;
-  }
-`;
+`

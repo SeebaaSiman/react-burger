@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useAuth } from "../../store/context/AuthContext";
 
 export default function ProtectedRoute() {
-  const [user, setUser] = useState(false);
+  const { user, admin } = useAuth();
 
-  return user ? <Outlet /> : <Navigate to='/login' />;
+  return user || admin ? <Outlet /> : <Navigate to='/login' />;
 }

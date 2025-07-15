@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LoginForm } from "../components/login/LoginForm";
 
 const Login = () => {
+  const btnStyle = {
+    margin: "16px",
+    padding: "12px 20px",
+    borderRadius: "12px",
+    background: "#416445",
+    color: "#F5F5F5",
+    fontSize: "1.2rem",
+  };
   return (
     <LoginPage>
-      <h1>Login</h1>
+      <LoginForm />
       <Link to='/'>
-        <button>Home</button>
+        <button style={btnStyle}>Home</button>
       </Link>
     </LoginPage>
   );
@@ -14,21 +23,14 @@ const Login = () => {
 
 export default Login;
 const LoginPage = styled.section`
-  width: 100vw;
+  background-color: ${(props) => props.theme.bgApp};
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: start;
-  padding-top: 4rem;
-  gap: 4rem;
-  button {
-    padding: 1rem 2rem;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
+  overflow: hidden;
+  gap: 30px;
+  width: 100vw;
+  transition: transform 0.5s ease-in-out;
 `;

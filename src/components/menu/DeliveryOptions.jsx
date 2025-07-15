@@ -1,44 +1,30 @@
-import { useState } from "react";
-import { restaurantInfo } from "../../services/db/local-info";
-import {
-  DeliveryInfoBlock,
-  DeliveryInfoLabel,
-  DeliveryInfoLink,
-  DeliveryOptionsStyle,
-  DeliveryToggleButton,
-  DeliveryToggleButtonWrapper,
-  OrderInfo,
-} from "../../ui/styles/menu-style";
+import { useEffect } from "react";
+import { DeliveryOptionsStyle, OrderInfo } from "../../ui/styles/menu-style";
+import { useCart } from "../../store/context/CartContext";
+import { DeliveryAtHome } from "./DeliveryAtHome";
+import { DeliveryInfo } from "./DeliveryInfo";
+
+import { ORDER_TYPE } from "../../services/db/order-type";
+import { CartActionTypes } from "../../store/cartReducer";
 
 export const DeliveryOptions = () => {
-  const [orderType, setOrderType] = useState("delivery");
+  const { cartState, dispatch } = useCart();
+  const { typeOrder } = cartState;
+  useEffect(() => {
+    if (!typeOrder) {
+      dispatch({ type: CartActionTypes.SET_TYPE_ORDER, payload: ORDER_TYPE.DELIVERY });
+    }
+  }, []);
 
   return (
     <DeliveryOptionsStyle>
-      <DeliveryToggleButtonWrapper>
-        <DeliveryToggleButton
-          className={` ${orderType === "delivery" ? "active" : ""}`}
-          onClick={() => setOrderType("delivery")}
-        >
-          Delivery
-        </DeliveryToggleButton>
-        <DeliveryToggleButton
-          className={` ${orderType === "takeaway" ? "active takeaway" : ""}`}
-          onClick={() => setOrderType("takeaway")}
-        >
-          Takeaway
-        </DeliveryToggleButton>
-      </DeliveryToggleButtonWrapper>
-
+      {typeOrder === ORDER_TYPE.DELIVERY && (
+        <p>Quedate en tu casa, nosotros armamos tu cena y te la llevamos. ¡Bon appetit!</p>
+      )}
+      {typeOrder === ORDER_TYPE.TAKEAWAY && <p>Espero que disfrutes de nuestro local. ¡Bon appetit!</p>}
+      <DeliveryAtHome />
       <OrderInfo>
-        <DeliveryInfoBlock>
-          <DeliveryInfoLabel>Demora {restaurantInfo.deliveryTime}</DeliveryInfoLabel>
-          <DeliveryInfoLink>Ver dirección</DeliveryInfoLink>
-        </DeliveryInfoBlock>
-        <DeliveryInfoBlock>
-          <DeliveryInfoLabel>Pedidos en curso</DeliveryInfoLabel>
-          <DeliveryInfoLink>Consultar estado</DeliveryInfoLink>
-        </DeliveryInfoBlock>
+        <DeliveryInfo />
       </OrderInfo>
     </DeliveryOptionsStyle>
   );

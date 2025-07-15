@@ -7,9 +7,8 @@ import { HomePage } from "../ui/styles/home-style";
 import { FeaturedBurgers } from "../components/home/main/FeaturedBurgers";
 import { AboutSection } from "../components/home/main/AboutSection";
 import { LocationSection } from "../components/home/main/LocationSection";
-import Loader from "../components/loader/Loader";
 
-function Home({ products, error, isLoading, cart, cartButtonTypes, handleClearCart }) {
+function Home() {
   const menuRef = useRef(null);
   const nosotrosRef = useRef(null);
   const ubicacionRef = useRef(null);
@@ -36,31 +35,22 @@ function Home({ products, error, isLoading, cart, cartButtonTypes, handleClearCa
 
   return (
     <HomePage>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Header
-            {...{
-              navRef,
-              navButtonsMap,
-              navButtonsRefs,
-              scrollToCategory,
-              activeCategory,
-              cart,
-              cartButtonTypes,
-              handleClearCart,
-            }}
-          />
-          <main>
-            <HeroSection />
-            <FeaturedBurgers {...{ menuRef, products, error ,cartButtonTypes}} />
-            <AboutSection {...{ nosotrosRef }} />
-            <LocationSection {...{ ubicacionRef }} />
-          </main>
-          <Footer {...{ contactoRef, scrollToCategory }} />
-        </>
-      )}
+      <Header
+        {...{
+          navRef,
+          navButtonsMap,
+          navButtonsRefs,
+          scrollToCategory,
+          activeCategory,
+        }}
+      />
+      <main>
+        <HeroSection />
+        <FeaturedBurgers {...{ menuRef }} />
+        <AboutSection {...{ nosotrosRef }} />
+        <LocationSection {...{ ubicacionRef }} />
+      </main>
+      <Footer {...{ contactoRef, scrollToCategory }} />
     </HomePage>
   );
 }

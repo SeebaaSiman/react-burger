@@ -2,8 +2,11 @@ import { MenuCategory, MenuItems } from "../../ui/styles/menu-style";
 import { CardProduct } from "./CardProduct";
 
 import { LoaderMenu } from "../loader/LoaderMenu";
+import { useMenuContext } from "../../store/context/MenuProvider";
 
-export const ProductsMenu = ({ sectionRefs, products, error, cartButtonTypes }) => {
+export const ProductsMenu = ({ sectionRefs }) => {
+  const { products, error } = useMenuContext();
+
   if (error) return <p>Error al cargar los productos destacados</p>;
   if (!products) return <LoaderMenu />;
   return (
@@ -18,7 +21,7 @@ export const ProductsMenu = ({ sectionRefs, products, error, cartButtonTypes }) 
             <h2>{category.name}</h2>
             <MenuItems>
               {category.items.map((item) => (
-                <CardProduct item={item} cartButtonTypes={cartButtonTypes} />
+                <CardProduct item={item} key={item.id}/>
               ))}
             </MenuItems>
           </MenuCategory>

@@ -1,13 +1,13 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import useNavBar from "../../hooks/useNavBar";
 import { MenuContentWrapper } from "../../ui/styles/menu-style";
 import { CategoryNav } from "./CategoryNav";
 import { DeliveryOptions } from "./DeliveryOptions";
 import { PromotionalBanner } from "./PromotionalBanner";
 import { SectionsMenu } from "./SectionsMenu";
+import { useFiltered } from "../../hooks/useFiltered";
 
-export const MenuContent = ({ products, error,  cartButtonTypes }) => {
-  // Refs de secciones
+export const MenuContent = () => {
   const promoRef = useRef(null);
   const burgersSimplesRef = useRef(null);
   const burgersDobleRef = useRef(null);
@@ -27,18 +27,28 @@ export const MenuContent = ({ products, error,  cartButtonTypes }) => {
 
   const { activeCategory, navRef, indicatorRef, navButtonsRefs, scrollToCategory, navWidth } =
     useNavBar(sectionsRefMap);
-
+  const { handleSearch, search, filteredItems,setSearch } = useFiltered();
+  const [searchOpen, setSearchOpen] = useState(false);
   return (
     <MenuContentWrapper>
       <PromotionalBanner />
       <DeliveryOptions />
-      <CategoryNav {...{ navRef, scrollToCategory, navButtonsRefs, activeCategory, indicatorRef, navWidth }} />
-      <SectionsMenu
-        sectionRefs={sectionsRefMap}
-        products={products}
-        error={error}
-        cartButtonTypes={cartButtonTypes}
+
+      <CategoryNav
+        {...{
+          navRef,
+          scrollToCategory,
+          handleSearch,
+          search,
+          navButtonsRefs,
+          activeCategory,
+          indicatorRef,
+          navWidth,
+          searchOpen,
+          setSearchOpen,setSearch
+        }}
       />
+      <SectionsMenu sectionRefs={sectionsRefMap} filteredItems={filteredItems} searchOpen={searchOpen} />
     </MenuContentWrapper>
   );
 };
